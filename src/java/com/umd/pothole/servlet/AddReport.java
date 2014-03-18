@@ -1,6 +1,5 @@
 package com.umd.pothole.servlet;
 
-import com.umd.pothole.database.DeviceDBO;
 import com.umd.pothole.database.ReportDBO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,17 +18,21 @@ public class AddReport extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        ReportDBO rdbo = new ReportDBO();
-        
-        boolean result = rdbo.add("a1", 4.5, 6.6, 10.0);
-//        
-//        String androidid = request.getParameter("androidid");
-//        Double latitude  = Double.parseDouble(request.getParameter("latitude"));
-//        Double longitude = Double.parseDouble(request.getParameter("longitude"));
-//        Double gforce = Double.parseDouble(request.getParameter("gforce"));
-        
+
         try (PrintWriter out = response.getWriter()) {
+            boolean result;
+            
+            try {
+                String androidid = request.getParameter("androidid");
+                Double latitude = Double.parseDouble(request.getParameter("latitude"));
+                Double longitude = Double.parseDouble(request.getParameter("longitude"));
+                Double gforce = Double.parseDouble(request.getParameter("gforce"));
+                ReportDBO rdbo = new ReportDBO();
+                result = rdbo.add(androidid, latitude, longitude, gforce);
+            } catch (NullPointerException | NumberFormatException e) {
+                result = false;
+            }
+
             out.print(result);
         }
     }

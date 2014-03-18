@@ -21,28 +21,29 @@ public class ReportDBO {
     public boolean add(String androidid, double latitude, double longitude, double gforce) {
 
         Transaction tx = null;
-        
         try {
             tx = session.beginTransaction();
-            Report r = new Report();
-            Device d = new Device();
-            d.setAndroidid(androidid);
-            session.saveOrUpdate(d);
-            r.setDevice(d);
-            r.setLatitude(latitude);
-            r.setLongitude(longitude);
-            r.setGforce(gforce);
-            session.save(r);
+            Report report = new Report();
+            Device device = (Device) session.get(Device.class, androidid);
+            if (device == null) {
+                device = new Device();
+                device.setAndroidid(androidid);
+                session.save(device);
+            }
+            report.setDevice(device);
+            report.setLatitude(latitude);
+            report.setLongitude(longitude);
+            report.setGforce(gforce);
+            session.save(report);
             tx.commit();
         } catch (HibernateException he) {
             if (tx != null) {
                 tx.rollback();
             }
-            
-            he.printStackTrace();
+            return false;
+        } catch (IllegalArgumentException iae) {
             return false;
         }
-
         return true;
     }
 }
