@@ -1,13 +1,16 @@
 package com.umd.pothole.database;
 
+import com.umd.pothole.hibernate.HibernateUtil;
+import org.hibernate.Session;
+
 /**
  * @author Steven
  */
-public class DeviceDBO extends DatabaseObject {
+public class DeviceDBO {
 
-    public boolean add(String androidid) {
+    Session session = null;
 
-        String query = "INSERT INTO device(androidid) VALUES(?)";
-        return update(query, androidid) != 0;
+    public DeviceDBO() {
+        this.session = HibernateUtil.getSessionFactory().getCurrentSession();
     }
 }
