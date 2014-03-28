@@ -3,6 +3,7 @@ package com.umd.pothole.database;
 import com.umd.pothole.hibernate.Device;
 import com.umd.pothole.hibernate.HibernateUtil;
 import com.umd.pothole.hibernate.Report;
+import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,7 +18,7 @@ public class ReportDBO {
     public ReportDBO() {
         this.session = HibernateUtil.getSessionFactory().getCurrentSession();
     }
-    
+
     public boolean add(String androidid, double latitude, double longitude, double gforce) {
 
         Transaction tx = null;
@@ -45,5 +46,21 @@ public class ReportDBO {
             return false;
         }
         return true;
+    }
+
+    public List<Report> getAllReports() {
+
+        List<Report> reports = null;
+
+        try {
+            Transaction tx = session.beginTransaction();
+            reports = session.createCriteria(Report.class).list();
+            tx.commit();
+
+        } catch (HibernateException ex) {
+            // nothin
+        }
+
+        return reports;
     }
 }
