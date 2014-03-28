@@ -1,0 +1,4 @@
+#map-canvas {
+    height:100%;
+}
+html, body, .row, .col-xs-6 { height: 100% }
