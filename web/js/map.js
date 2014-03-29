@@ -51,9 +51,8 @@ function GetReportsSuccess(json) {
 
     var ADD_DELAY = 100;
     var delay = 250;
-
     if (json === null) {
-        alert("GetReports result is null");
+        console.error("GetReports result is null");
     } else {
         $.each(json, function(key, val) {
             console.debug("Processing report " + val.rid);
@@ -69,7 +68,7 @@ function GetReportsSuccess(json) {
 }
 
 function GetReportsFailed(jqxhr, textStatus, error) {
-    alert("Ajax Error -> " + error);
+    console.error("Ajax Error -> " + error);
 }
 
 $(document).ready(function() {

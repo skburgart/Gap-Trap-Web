@@ -8,19 +8,45 @@
         <title>Pothole Detector</title>
         <link href="bootstrap-3.1.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="bootstrap-3.1.1/css/template.css" rel="stylesheet">
-        <link href="css/map.css" rel="stylesheet">
     </head>
     <body>
         <jsp:include page="header.jsp">
-            <jsp:param name="page" value="map"/>
+            <jsp:param name="page" value="about"/>
         </jsp:include>
 
-        <div id="map-canvas"></div>
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Welcome!</h1>
+                <p>This site showcases a proof-of-concept demo of a pothole detection and reporting system.</p>
+            </div>
+        </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
-        <script src="bootstrap-3.1.1/js/bootstrap.min.js"></script>
-        <script src="js/map.js"></script>
-        <script src="js/google-analytics.js"></script>
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>View Map</h2>
+                    <p>Our map displays all of the reports in an interactive manner. Click indivdual markers to view more information about the report.</p>
+                    <p><a class="btn btn-default" href="map.jsp" role="button">Map &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Browse Data</h2>
+                    <p>All of the reports are available for browsing on our data page.</p>
+                    <p><a class="btn btn-default" href="data.jsp" role="button">Data &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Thanks!</h2>
+                    <p>Thanks for visiting! Please feel free to <a href="mailto:sburgart@cs.umd.edu">contact the developer</a> with any questions and comments.</p>
+                </div>
+            </div>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+            <script src="bootstrap-3.1.1/js/bootstrap.min.js"></script>
+            <script src="js/google-analytics.js"></script>
     </body>
 </html>
+
+
+
+

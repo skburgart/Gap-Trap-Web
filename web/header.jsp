@@ -14,9 +14,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="<%=onPage.equals("map") ? "active" : ""%>"><a href="index.jsp">Map</a></li>
+                <li class="<%=onPage.equals("about") ? "active" : ""%>"><a href="index.jsp">About</a></li>
+                <li class="<%=onPage.equals("map") ? "active" : ""%>"><a href="map.jsp">Map</a></li>
                 <li class="<%=onPage.equals("data") ? "active" : ""%>"><a href="data.jsp">Data</a></li>
-                <li class="<%=onPage.equals("about") ? "active" : ""%>"><a href="#">About</a></li>
             </ul>
         </div>
     </div>
