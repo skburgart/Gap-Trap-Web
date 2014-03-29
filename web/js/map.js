@@ -9,17 +9,36 @@ function InitializeMap() {
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 }
 
-function AddMarker(lat, lon) {
+function AddMarker(val) {
 
-    console.debug("Adding marker to [" + lat + ", " + lon + "]");
-
-    var position = new google.maps.LatLng(lat, lon);
+    console.debug("Adding marker to [" + val.latitude + ", " + val.longitude + "]");
+    var infowindow = new google.maps.InfoWindow({
+        content: InfoWindowHTML(val)
+    });
+    var position = new google.maps.LatLng(val.latitude, val.longitude);
     var marker = new google.maps.Marker({
         map: map,
         position: position,
         animation: google.maps.Animation.DROP,
-        title: "Hello World!"
+        title: "Pothole"
     });
+
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map, marker);
+    });
+}
+
+function InfoWindowHTML(val) {
+
+    var html = "";
+
+    html += "<table class='infowindow'>";
+    html += "<tr><td><b>Device</b></td><td>" + val.androidid + "</td></tr>";
+    html += "<tr><td><b>Reported</b></td><td>" + val.timestamp + "</td></tr>";
+    html += "<tr><td><b>GForce</b></td><td>" + val.gforce + "</td></tr>";
+    html += "</table>";
+
+    return html;
 }
 
 function AddReportsToMap() {
@@ -41,7 +60,7 @@ function GetReportsSuccess(json) {
 
             // Delay animation
             setTimeout(function() {
-                AddMarker(val.latitude, val.longitude);
+                AddMarker(val);
             }, delay);
 
             delay += ADD_DELAY;

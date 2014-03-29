@@ -2,3 +2,7 @@
     height:100%;
 }
 html, body, .row, .col-xs-6 { height: 100% }
+
+.infowindow td {
+    padding: 0 5px 0 5px;
+}
