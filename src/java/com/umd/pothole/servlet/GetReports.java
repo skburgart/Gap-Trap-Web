@@ -42,7 +42,7 @@ public class GetReports extends HttpServlet {
 
     private String reportsToJson(List<Report> reports) {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.registerTypeAdapter(Report.class, new ReportAdapter()).create();
+        Gson gson = gsonBuilder.registerTypeAdapter(Report.class, new ReportAdapter()).setPrettyPrinting().create();
         return gson.toJson(reports);
     }
 

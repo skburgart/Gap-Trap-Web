@@ -50,7 +50,7 @@ function AddReportsToMap() {
 function GetReportsSuccess(json) {
 
     var ADD_DELAY = 100;
-    var delay = 1000;
+    var delay = 250;
 
     if (json === null) {
         alert("GetReports result is null");
