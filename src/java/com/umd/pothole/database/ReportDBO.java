@@ -9,7 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- * @author Steven
+ * @author Steven Burgart <skburgart@gmail.com>
  */
 public class ReportDBO {
 
@@ -56,9 +56,8 @@ public class ReportDBO {
             Transaction tx = session.beginTransaction();
             reports = session.createCriteria(Report.class).list();
             tx.commit();
-
         } catch (HibernateException ex) {
-            // nothin
+            // nothing
         }
 
         return reports;

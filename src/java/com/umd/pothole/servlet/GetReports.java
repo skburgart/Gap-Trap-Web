@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Steven Burgart
+ * @author Steven Burgart <skburgart@gmail.com>
  */
 @WebServlet(name = "GetReports", urlPatterns = {"/GetReports"})
 public class GetReports extends HttpServlet {
@@ -36,23 +36,19 @@ public class GetReports extends HttpServlet {
         ReportDBO rdbo = new ReportDBO();
         List<Report> reports = rdbo.getAllReports();
 
+        // Write json
         PrintWriter out = response.getWriter();
         out.print(reportsToJson(reports));
     }
 
     private String reportsToJson(List<Report> reports) {
+        
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.registerTypeAdapter(Report.class, new ReportAdapter()).setPrettyPrinting().create();
         return gson.toJson(reports);
     }
 
-//         private Integer rid;
-//     private Date timestamp;
-//     private Device device;
-//     private double latitude;
-//     private double longitude;
-//     private double gforce;
-    public class ReportAdapter implements JsonSerializer<Report> {
+    private class ReportAdapter implements JsonSerializer<Report> {
 
         @Override
         public JsonElement serialize(Report r, Type type, JsonSerializationContext jsc) {

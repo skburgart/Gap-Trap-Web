@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Steven
+ * @author Steven Burgart <skburgart@gmail.com>
  */
 @WebServlet(name = "AddReport", urlPatterns = {"/AddReport"})
 public class AddReport extends HttpServlet {

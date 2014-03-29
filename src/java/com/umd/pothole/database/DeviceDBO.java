@@ -4,7 +4,7 @@ import com.umd.pothole.hibernate.HibernateUtil;
 import org.hibernate.Session;
 
 /**
- * @author Steven
+ * @author Steven Burgart <skburgart@gmail.com>
  */
 public class DeviceDBO {
 
