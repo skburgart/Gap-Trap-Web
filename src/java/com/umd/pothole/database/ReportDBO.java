@@ -1,63 +1,59 @@
 package com.umd.pothole.database;
 
-import com.umd.pothole.hibernate.Device;
-import com.umd.pothole.hibernate.HibernateUtil;
-import com.umd.pothole.hibernate.Report;
+import com.umd.pothole.value.Device;
+import com.umd.pothole.value.Report;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.apache.log4j.Logger;
 
 /**
  * @author Steven Burgart <skburgart@gmail.com>
  */
-public class ReportDBO {
+public class ReportDBO extends DatabaseObject {
 
-    Session session = null;
-
-    public ReportDBO() {
-        this.session = HibernateUtil.getSessionFactory().getCurrentSession();
-    }
+    private static final Logger log = Logger.getLogger(ReportDBO.class.getName());
 
     public boolean add(String androidid, double latitude, double longitude, double gforce) {
 
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            Report report = new Report();
-            Device device = (Device) session.get(Device.class, androidid);
-            if (device == null) {
-                device = new Device();
-                device.setAndroidid(androidid);
-                session.save(device);
-            }
-            report.setDevice(device);
-            report.setLatitude(latitude);
-            report.setLongitude(longitude);
-            report.setGforce(gforce);
-            session.save(report);
-            tx.commit();
-        } catch (HibernateException he) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            return false;
-        } catch (IllegalArgumentException iae) {
-            return false;
-        }
-        return true;
+        String query = "INSERT INTO report(androidid, latitude, longitude, gforce) VALUES(?, ?, ?, ?)";
+
+        // Add device if not registered
+        DeviceDBO ddbo = new DeviceDBO();
+        ddbo.addIfNotRegistered(androidid);
+        ddbo.close();
+
+        log.info("Adding report for " + androidid);
+        return update(query, androidid, latitude, longitude, gforce) != 0;
+    }
+
+    public boolean add(Report r) {
+
+        return add(r.getDevice().getAndroidid(), r.getLatitude(), r.getLongitude(), r.getGforce());
     }
 
     public List<Report> getAllReports() {
 
-        List<Report> reports = null;
+        String query = "SELECT rid, androidid, latitude, longitude, gforce, timestamp FROM report";
+        return parseResult(select(query));
+    }
 
-        try {
-            Transaction tx = session.beginTransaction();
-            reports = session.createCriteria(Report.class).list();
-            tx.commit();
-        } catch (HibernateException ex) {
-            // nothing
+    private ArrayList<Report> parseResult(ArrayList<HashMap> result) {
+
+        ArrayList<Report> reports = new ArrayList<>();
+        for (HashMap row : result) {
+            Report r = new Report();
+            Device d = new Device();
+
+            d.setAndroidid((String) row.get("androidid"));
+            r.setRid(((Number) row.get("rid")).intValue());
+            r.setLatitude((Double) row.get("latitude"));
+            r.setLongitude((Double) row.get("longitude"));
+            r.setGforce((Double) row.get("gforce"));
+            r.setTimestamp((Timestamp) row.get("timestamp"));
+            r.setDevice(d);
+            reports.add(r);
         }
 
         return reports;

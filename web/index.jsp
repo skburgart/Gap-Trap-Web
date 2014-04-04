@@ -52,7 +52,3 @@
         <script src="js/google-analytics.js"></script>
     </body>
 </html>
-
-
-
-

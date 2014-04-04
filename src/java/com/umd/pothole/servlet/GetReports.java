@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.umd.pothole.database.ReportDBO;
-import com.umd.pothole.hibernate.Report;
+import com.umd.pothole.value.Report;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  * @author Steven Burgart <skburgart@gmail.com>
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "GetReports", urlPatterns = {"/GetReports"})
 public class GetReports extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(GetReports.class.getName());
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -35,6 +37,10 @@ public class GetReports extends HttpServlet {
         // Get report data
         ReportDBO rdbo = new ReportDBO();
         List<Report> reports = rdbo.getAllReports();
+        rdbo.close();
+
+        // Log
+        log.info("Get Reports -> " + reports.size());
 
         // Write json
         PrintWriter out = response.getWriter();
@@ -63,7 +69,6 @@ public class GetReports extends HttpServlet {
             jsonObject.addProperty("gforce", r.getGforce());
             return jsonObject;
         }
-
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

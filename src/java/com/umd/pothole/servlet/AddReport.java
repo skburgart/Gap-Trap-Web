@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  * @author Steven Burgart <skburgart@gmail.com>
@@ -15,10 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "AddReport", urlPatterns = {"/AddReport"})
 public class AddReport extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(AddReport.class.getName());
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        log.trace("Entering AddReport");
         try (PrintWriter out = response.getWriter()) {
             boolean result;
             
@@ -29,7 +32,9 @@ public class AddReport extends HttpServlet {
                 Double gforce = Double.parseDouble(request.getParameter("gforce"));
                 ReportDBO rdbo = new ReportDBO();
                 result = rdbo.add(androidid, latitude, longitude, gforce);
+                rdbo.close();
             } catch (NullPointerException | NumberFormatException e) {
+                log.error(e.toString() + " -> " + e.getMessage());
                 result = false;
             }
 
