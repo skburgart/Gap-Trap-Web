@@ -54,7 +54,7 @@ public class GetReports extends HttpServlet {
         return gson.toJson(reports);
     }
 
-    private class ReportAdapter implements JsonSerializer<Report> {
+    private static class ReportAdapter implements JsonSerializer<Report> {
 
         @Override
         public JsonElement serialize(Report r, Type type, JsonSerializationContext jsc) {
