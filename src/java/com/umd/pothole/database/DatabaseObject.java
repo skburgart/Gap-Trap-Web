@@ -104,7 +104,7 @@ public abstract class DatabaseObject {
         Object result = null;
         ArrayList<HashMap> queryResult = select(query, args);
         for (HashMap hm : queryResult) {
-            for (Object key : hm.entrySet()) {
+            for (Object key : hm.keySet()) {
                 result = hm.get(key);
             }
         }

@@ -1,11 +1,14 @@
 package com.umd.pothole.database;
 
 import com.umd.pothole.value.Device;
+import org.apache.log4j.Logger;
 
 /**
  * @author Steven Burgart <skburgart@gmail.com>
  */
 public class DeviceDBO extends DatabaseObject {
+
+    private static final Logger log = Logger.getLogger(DeviceDBO.class.getName());
 
     public boolean add(String androidid) {
 
@@ -26,6 +29,7 @@ public class DeviceDBO extends DatabaseObject {
             return true;
         }
 
+        log.debug("Device " + androidid + " not found. Adding.");
         return add(androidid);
     }
 
