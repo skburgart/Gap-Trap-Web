@@ -17,7 +17,7 @@ public class ReportDBO extends DatabaseObject {
 
     public boolean add(String androidid, double latitude, double longitude, double gforce) {
 
-        String query = "INSERT INTO report(androidid, latitude, longitude, gforce) VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO report(androidid, location, gforce) VALUES(?, Point(?, ?), ?)";
 
         // Add device if not registered
         DeviceDBO ddbo = new DeviceDBO();
@@ -35,7 +35,7 @@ public class ReportDBO extends DatabaseObject {
 
     public List<Report> getAllReports() {
 
-        String query = "SELECT rid, androidid, latitude, longitude, gforce, timestamp FROM report";
+        String query = "SELECT rid, androidid, X(location) AS latitude, Y(location) AS longitude, gforce, timestamp FROM report";
         return parseResult(select(query));
     }
 
