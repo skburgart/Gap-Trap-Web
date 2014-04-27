@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `pothole` /*!40100 DEFAULT CHARACTER SET latin1 *
 USE `pothole`;
 -- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
 --
--- Host: skburgart.com    Database: pothole
+-- Host: 127.0.0.1    Database: pothole
 -- ------------------------------------------------------
--- Server version	5.1.73
+-- Server version	5.6.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `device` (
   `androidid` char(16) NOT NULL,
   `registered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`androidid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,14 +41,13 @@ DROP TABLE IF EXISTS `report`;
 CREATE TABLE `report` (
   `rid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `androidid` char(16) NOT NULL,
-  `latitude` double NOT NULL,
-  `longitude` double NOT NULL,
+  `location` point NOT NULL,
   `gforce` double NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`rid`),
   KEY `fkreportdevice_idx` (`androidid`),
-  CONSTRAINT `fkreportdevice` FOREIGN KEY (`androidid`) REFERENCES `device` (`androidid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+  SPATIAL KEY `spatial_location` (`location`)
+) ENGINE=MyISAM AUTO_INCREMENT=3365602 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -60,4 +59,4 @@ CREATE TABLE `report` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-04 22:30:26
+-- Dump completed on 2014-04-27 19:21:33
