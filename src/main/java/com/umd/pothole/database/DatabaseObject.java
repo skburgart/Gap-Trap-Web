@@ -74,7 +74,7 @@ public abstract class DatabaseObject {
 
     protected ArrayList<HashMap> select(String query, Object... args) {
 
-        ArrayList result = null;
+        ArrayList<HashMap> result = new ArrayList<>();
 
         try (PreparedStatement stmt = prepare(query, args); ResultSet rs = stmt.executeQuery()) {
             result = resultSetToArrayList(rs);
@@ -121,7 +121,7 @@ public abstract class DatabaseObject {
 
         ResultSetMetaData md = rs.getMetaData();
         int columns = md.getColumnCount();
-        ArrayList<HashMap> list = new ArrayList();
+        ArrayList<HashMap> list = new ArrayList<>();
         while (rs.next()) {
             HashMap row = new HashMap(columns);
             for (int i = 1; i <= columns; ++i) {
