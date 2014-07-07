@@ -123,7 +123,7 @@ public abstract class DatabaseObject {
         int columns = md.getColumnCount();
         ArrayList<HashMap> list = new ArrayList<>();
         while (rs.next()) {
-            HashMap row = new HashMap(columns);
+            HashMap<String, Object> row = new HashMap<>(columns);
             for (int i = 1; i <= columns; ++i) {
                 row.put(md.getColumnName(i), rs.getObject(i));
             }
