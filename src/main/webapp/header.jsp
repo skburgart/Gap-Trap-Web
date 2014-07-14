@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp">CMSC724 Pothole Detector<sup>&beta;</sup></a>
+            <a class="navbar-brand" href="index.jsp">Gap Trap<sup>&beta;</sup></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">

@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Steven Burgart">
-        <title>Pothole Detector</title>
+        <title>Gap Trap</title>
         <link href="bootstrap-3.1.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="bootstrap-3.1.1/css/template.css" rel="stylesheet">
         <link href="datatables-1.9.4/css/jquery.dataTables.css" rel="stylesheet">

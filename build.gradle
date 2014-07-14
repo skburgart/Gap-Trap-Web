@@ -3,7 +3,7 @@ apply plugin: 'war'
 sourceCompatibility = '1.7'
 
 war {
-    baseName = 'pothole'
+    baseName = 'gaptrap'
 }
 
 repositories {
