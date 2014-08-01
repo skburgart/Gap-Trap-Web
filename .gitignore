@@ -1,4 +1,4 @@
 build/
-.gradle
-
-/.nb-gradle/private/
+.gradle/
+.nb-gradle/
+.nb-gradle-properties

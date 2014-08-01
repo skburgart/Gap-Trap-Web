@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.umd.pothole.database.ReportDBO;
+import com.umd.pothole.HibernateUtil;
 import com.umd.pothole.value.Report;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 /**
  * @author Steven Burgart <skburgart@gmail.com>
@@ -28,6 +29,7 @@ import org.apache.log4j.Logger;
 public class GetReports extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(GetReports.class.getName());
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -35,9 +37,10 @@ public class GetReports extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
 
         // Get report data
-        ReportDBO rdbo = new ReportDBO();
-        List<Report> reports = rdbo.getAllReports();
-        rdbo.close();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        @SuppressWarnings("unchecked")
+        List<Report> reports = session.createCriteria(Report.class).list();
+        session.close();
 
         // Log
         log.info("Get Reports -> " + reports.size());
@@ -48,7 +51,7 @@ public class GetReports extends HttpServlet {
     }
 
     private String reportsToJson(List<Report> reports) {
-        
+
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.registerTypeAdapter(Report.class, new ReportAdapter()).setPrettyPrinting().create();
         return gson.toJson(reports);

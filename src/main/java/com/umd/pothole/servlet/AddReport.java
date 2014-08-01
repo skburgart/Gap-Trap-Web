@@ -1,14 +1,18 @@
 package com.umd.pothole.servlet;
 
-import com.umd.pothole.database.ReportDBO;
+import com.umd.pothole.HibernateUtil;
+import com.umd.pothole.value.Device;
+import com.umd.pothole.value.Report;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 /**
  * @author Steven Burgart <skburgart@gmail.com>
@@ -17,22 +21,29 @@ import org.apache.log4j.Logger;
 public class AddReport extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(AddReport.class.getName());
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         log.trace("Entering AddReport");
         try (PrintWriter out = response.getWriter()) {
-            boolean result;
-            
+            boolean result = true;
+
             try {
-                String androidid = request.getParameter("androidid");
-                Double latitude = Double.parseDouble(request.getParameter("latitude"));
-                Double longitude = Double.parseDouble(request.getParameter("longitude"));
-                Double gforce = Double.parseDouble(request.getParameter("gforce"));
-                ReportDBO rdbo = new ReportDBO();
-                result = rdbo.add(androidid, latitude, longitude, gforce);
-                rdbo.close();
+                Date now = new Date();
+                Device device = new Device(request.getParameter("androidid"), now);
+                Report report = new Report();
+                report.setDevice(device);
+                report.setLatitude(Double.parseDouble(request.getParameter("latitude")));
+                report.setLongitude(Double.parseDouble(request.getParameter("longitude")));
+                report.setGforce(Double.parseDouble(request.getParameter("gforce")));
+                report.setTimestamp(now);
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                session.beginTransaction();
+                session.saveOrUpdate(device);
+                session.save(report);
+                session.getTransaction().commit();;
             } catch (NullPointerException | NumberFormatException e) {
                 log.error(e.toString() + " -> " + e.getMessage());
                 result = false;
