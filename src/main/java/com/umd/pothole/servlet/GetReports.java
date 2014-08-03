@@ -28,6 +28,7 @@ import org.hibernate.Session;
 @WebServlet(name = "GetReports", urlPatterns = {"/GetReports"})
 public class GetReports extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
     private static final Logger log = Logger.getLogger(GetReports.class.getName());
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

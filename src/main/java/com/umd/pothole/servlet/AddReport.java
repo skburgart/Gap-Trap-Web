@@ -20,6 +20,7 @@ import org.hibernate.Session;
 @WebServlet(name = "AddReport", urlPatterns = {"/AddReport"})
 public class AddReport extends HttpServlet {
 
+    static final long serialVersionUID = 1L;
     private static final Logger log = Logger.getLogger(AddReport.class.getName());
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -43,7 +44,7 @@ public class AddReport extends HttpServlet {
                 session.beginTransaction();
                 session.saveOrUpdate(device);
                 session.save(report);
-                session.getTransaction().commit();;
+                session.getTransaction().commit();
             } catch (NullPointerException | NumberFormatException e) {
                 log.error(e.toString() + " -> " + e.getMessage());
                 result = false;

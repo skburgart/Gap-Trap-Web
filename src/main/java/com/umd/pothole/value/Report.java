@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "report")
-public class Report implements Serializable {
+public class Report {
 
     @Id
     @GeneratedValue
@@ -38,10 +38,6 @@ public class Report implements Serializable {
     @Column(nullable = false)
     private double gforce;
 
-    void Report() {
-        // default constructor
-    }
-
     public Integer getRid() {
         return rid;
     }
@@ -51,11 +47,11 @@ public class Report implements Serializable {
     }
 
     public Date getTimestamp() {
-        return timestamp;
+        return (Date) timestamp.clone();
     }
 
     public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+        this.timestamp = (Date) timestamp.clone();
     }
 
     public Device getDevice() {

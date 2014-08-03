@@ -34,7 +34,7 @@ public class Device {
 
     public Device(String androidid, Date registered) {
         this.androidid = androidid;
-        this.registered = registered;
+        this.registered = (Date) registered.clone();
     }
 
     public String getAndroidid() {
@@ -46,11 +46,11 @@ public class Device {
     }
 
     public Date getRegistered() {
-        return registered;
+        return (Date) registered.clone();
     }
 
     public void setRegistered(Date registered) {
-        this.registered = registered;
+        this.registered = (Date) registered.clone();
     }
 
     public Set<Report> getReports() {
